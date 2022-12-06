@@ -26,8 +26,8 @@ services:
         restart: unless-stopped
         extra_hosts:
             - 'projeto.local:host-gateway'
-            - 'site1.local:host-gateway'
-            - 'site2.local:host-gateway'
+            - 'projeto1.local:host-gateway'
+            - 'projeto2.local:host-gateway'
         ports:
             - '${APP_PORT:-80}:80'
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
@@ -42,7 +42,7 @@ services:
 
     #MySQL
     mysql:
-        image: mysql:latest
+        image: mariadb:latest
         restart: unless-stopped
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
@@ -51,7 +51,6 @@ services:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
             - ./docker/data/mysql:/var/lib/mysql
         networks:
@@ -65,7 +64,7 @@ services:
             - ${FORWARD_PHPMYADMIN_PORT:-81}:80
         environment:
             PMA_HOST: mysql
-            PMA_USER: '${DB_USERNAME}'
+            PMA_USER: 'root'
             PMA_PASSWORD: '${DB_PASSWORD}'
             UPLOAD_LIMIT: 300M
         depends_on:
