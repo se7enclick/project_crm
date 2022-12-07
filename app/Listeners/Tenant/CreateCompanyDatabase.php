@@ -3,6 +3,7 @@
 namespace App\Listeners\Tenant;
 
 use App\Events\Tenent\CompanyCreated;
+use App\Events\Tenent\DatabaseCreated;
 use App\Tenant\Database\DatabaseManager;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,5 +37,8 @@ class CreateCompanyDatabase
         if (!$this->database->createDatabase($company)) {
             throw new Exception('Error create database');
         }
+
+        //Run migrations
+        event(new DatabaseCreated($company));
     }
 }
