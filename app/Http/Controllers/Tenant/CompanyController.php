@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Events\Tenent\CompanyCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CompanyController extends Controller
@@ -56,7 +58,7 @@ class CompanyController extends Controller
         ]);
 
         // if (true)
-        //     event(new CompanyCreated($company));
+        event(new CompanyCreated($company));
         // else
         //     event(new DatabaseCreated($company));
 
