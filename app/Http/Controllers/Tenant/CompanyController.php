@@ -1,12 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tenant;
 
+use App\Http\Controllers\Controller;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CompanyController extends Controller
 {
+    private $company;
+
+    public function __construct(Company $company)
+    {
+        $this->company = $company;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +44,23 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $company = $this->company->create([
+            'name'          => 'Empresa x ' . Str::random(5),
+            'domain'        => 'projeto' . rand(3, 10) . '.local',
+            'subdomain'     => 'projeto' . rand(3, 10) . '.local',
+            'bd_database'   => 'project' . rand(3, 10),
+            'bd_hostname'   => 'mysql',
+            'bd_username'   => 'root',
+            'bd_password'   => 'secret',
+        ]);
+
+        // if (true)
+        //     event(new CompanyCreated($company));
+        // else
+        //     event(new DatabaseCreated($company));
+
+        dd($company);
     }
 
     /**

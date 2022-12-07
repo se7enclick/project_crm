@@ -16,7 +16,6 @@ class CheckDomainMain
      */
     public function handle(Request $request, Closure $next)
     {
-
         if ($request->getHost() != config('tenant.domain_main')) {
             abort(401);
         }
