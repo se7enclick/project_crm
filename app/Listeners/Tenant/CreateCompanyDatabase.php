@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 
 class CreateCompanyDatabase
 {
-    private $databases;
+    private $database;
     /**
      * Create the event listener.
      *
@@ -19,7 +19,7 @@ class CreateCompanyDatabase
      */
     public function __construct(DatabaseManager $database)
     {
-        $this->$database = $database;
+        $this->database = $database;
     }
 
     /**
