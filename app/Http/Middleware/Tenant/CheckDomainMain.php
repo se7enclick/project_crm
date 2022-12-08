@@ -17,7 +17,8 @@ class CheckDomainMain
     public function handle(Request $request, Closure $next)
     {
         if ($request->getHost() != config('tenant.domain_main')) {
-            abort(401);
+            abort(401, 'Access not allowed!');
+            // TODO Criar uma view para mostrar que a empresa não pode ser acessado de outros dominios
         }
         return $next($request);
     }

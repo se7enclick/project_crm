@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Events\Tenent\CompanyCreated;
+use App\Events\Tenent\DatabaseCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -57,10 +58,11 @@ class CompanyController extends Controller
             'bd_password'   => 'secret',
         ]);
 
-        // if (true)
-        event(new CompanyCreated($company));
-        // else
-        //     event(new DatabaseCreated($company));
+        if (true) {
+            event(new CompanyCreated($company));
+        } else {
+            event(new DatabaseCreated($company));
+        }
 
         dd($company);
     }

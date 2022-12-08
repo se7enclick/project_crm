@@ -8,21 +8,21 @@ use Database\Seeders\Tenant\UsersTableSeeder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
-class TenantMigrations extends Command
+class TenantSeeder extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'tanants:migrations {id?} {--refresh}';
+    protected $signature = 'tanants:seed {id?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Run Migrations Tenants';
+    protected $description = 'Run Seeder Tenants';
 
     private $tenant;
     /**
@@ -61,23 +61,15 @@ class TenantMigrations extends Command
 
     public function execCommand(Company $company)
     {
-        $command = $this->option('refresh') ? 'migrate:refresh' : 'migrate';
 
         $this->tenant->setConnection($company);
 
-        $this->info("Connecting Company {$company->name}");
-
-        $run = Artisan::call($command, [
-            '--force' => true,
-            '--path' => '/database/migrations/tenant',
+        $run = Artisan::call('db:seed', [
+            '--class' => UsersTableSeeder::class,
         ]);
 
         if ($run === 0) {
-            Artisan::call('db:seed', [
-                '--class' => UsersTableSeeder::class,
-            ]);
-            $this->info("Seeder created successfully");
-            $this->info("End Connecting Company {$company->name}");
+            $this->info("Seeder created successfully {$company->name}");
             $this->info('-----------------------------------------');
         }
     }

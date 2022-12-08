@@ -36,6 +36,7 @@ class CreateCompanyDatabase
 
         if (!$this->database->createDatabase($company)) {
             throw new Exception('Error create database');
+            //TODO Melhorar a forma de mostrar esse erro se der erro na criação do banco
         }
 
         //Run migrations
